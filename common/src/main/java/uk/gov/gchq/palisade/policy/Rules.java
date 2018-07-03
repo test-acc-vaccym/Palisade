@@ -188,11 +188,10 @@ public class Rules<T> {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(message)
-                        // TODO This is expensive - but we don't have any other way of doing it
-                .append(JSONSerialiser.serialise(rules))
-                .toHashCode();
+        final HashCodeBuilder builder = new HashCodeBuilder(17, 37)
+                .append(message);
+        rules.forEach((s, tRule) -> builder.append(s).append(JSONSerialiser.serialise(tRule)));
+        return builder.toHashCode();
     }
 
     @Override
